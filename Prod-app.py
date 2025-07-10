@@ -20,6 +20,8 @@ if not os.path.exists(MODEL_PATH):
         gdown.download(gdrive_url, MODEL_PATH, quiet=False)
 
 # Load model
+
+
 @st.cache_resource
 def load_model():
     model = SwinForImageClassification.from_pretrained(
@@ -27,9 +29,11 @@ def load_model():
         num_labels=2,
         ignore_mismatched_sizes=True
     )
-    model.load_state_dict(torch.load(MODEL_PATH, map_location=torch.device("cpu")))
+    model.load_state_dict(torch.load(
+        MODEL_PATH, map_location=torch.device("cpu")))
     model.eval()
     return model
+
 
 model = load_model()
 class_names = ["CANCER", "NON CANCER"]
@@ -42,11 +46,12 @@ transform = transforms.Compose([
 ])
 
 # Upload image
-uploaded_file = st.file_uploader("📤 Upload a tongue image", type=["jpg", "jpeg", "png"])
+uploaded_file = st.file_uploader(
+    "📤 Upload a tongue image", type=["jpg", "jpeg", "png"])
 
 if uploaded_file:
     image = Image.open(uploaded_file).convert("RGB")
-    st.image(image, caption="🖼️ Uploaded Image", use_column_width=True)
+    st.image(image, caption="🖼️ Uploaded Image", use_container_width=True)
 
     if st.button("🔍 Predict"):
         with st.spinner("Analyzing..."):
@@ -61,5 +66,7 @@ if uploaded_file:
             color = "red" if result == "CANCER" else "green"
             emoji = "⚠️" if result == "CANCER" else "✅"
 
-            st.markdown(f"<h3 style='text-align:center; color:{color}'>{emoji} Prediction: {result}</h3>", unsafe_allow_html=True)
-            st.markdown(f"<p style='text-align:center'>Confidence: <b>{prob*100:.2f}%</b></p>", unsafe_allow_html=True)
+            st.markdown(
+                f"<h3 style='text-align:center; color:{color}'>{emoji} Prediction: {result}</h3>", unsafe_allow_html=True)
+            st.markdown(
+                f"<p style='text-align:center'>Confidence: <b>{prob*100:.2f}%</b></p>", unsafe_allow_html=True)
