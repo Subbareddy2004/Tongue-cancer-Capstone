@@ -33,6 +33,7 @@ st.markdown("""
         border-radius: 10px;
         margin: 1rem 0;
         border-left: 5px solid #667eea;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     
     .warning-box {
@@ -41,6 +42,7 @@ st.markdown("""
         border-radius: 10px;
         margin: 1rem 0;
         border-left: 5px solid #ff9800;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     
     .success-box {
@@ -49,6 +51,7 @@ st.markdown("""
         border-radius: 10px;
         margin: 1rem 0;
         border-left: 5px solid #4caf50;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     
     .error-box {
@@ -57,6 +60,7 @@ st.markdown("""
         border-radius: 10px;
         margin: 1rem 0;
         border-left: 5px solid #f44336;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     
     .upload-section {
@@ -152,7 +156,7 @@ with col1:
     st.markdown("""
     <div class="warning-box">
         <h3>⚠️ Important Medical Disclaimer</h3>
-        <p><strong>This tool is for educational and screening purposes only.</strong> 
+        <p style="line-height: 1.6; margin-bottom: 0;"><strong>This tool is for educational and screening purposes only.</strong> 
         It should not replace professional medical diagnosis or consultation with healthcare providers. 
         Always consult with qualified medical professionals for proper diagnosis and treatment.</p>
     </div>
@@ -161,15 +165,15 @@ with col1:
     # Instructions
     st.markdown("""
     <div class="info-box">
-        <h3>📝 Instructions for Best Results</h3>
-        <ul>
-            <li><strong>Image Quality:</strong> Use clear, well-lit photographs</li>
-            <li><strong>Tongue Position:</strong> Extend tongue fully, keep it straight</li>
-            <li><strong>Lighting:</strong> Good natural or white lighting preferred</li>
-            <li><strong>Background:</strong> Plain background works best</li>
-            <li><strong>Format:</strong> JPG, JPEG, or PNG files supported</li>
-            <li><strong>Size:</strong> High resolution images (but not too large)</li>
-        </ul>
+        <h3 style="margin-bottom: 1rem;">📝 Instructions for Best Results</h3>
+        <div style="line-height: 1.8;">
+            <p><strong>🔸 Image Quality:</strong> Use clear, well-lit photographs</p>
+            <p><strong>🔸 Tongue Position:</strong> Extend tongue fully, keep it straight</p>
+            <p><strong>🔸 Lighting:</strong> Good natural or white lighting preferred</p>
+            <p><strong>🔸 Background:</strong> Plain background works best</p>
+            <p><strong>🔸 Format:</strong> JPG, JPEG, or PNG files supported</p>
+            <p style="margin-bottom: 0;"><strong>🔸 Size:</strong> High resolution images (but not too large)</p>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
