@@ -9,7 +9,7 @@ import time
 
 # Set Hugging Face token - ADD THIS AT THE TOP
 # You can get your token from https://huggingface.co/settings/tokens
-HUGGINGFACE_TOKEN = "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"  # Replace with your actual token
+HUGGINGFACE_TOKEN = "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"  # Replace with your actual token
 os.environ['HUGGINGFACE_HUB_TOKEN'] = HUGGINGFACE_TOKEN
 
 # Page configuration
@@ -219,23 +219,38 @@ if not os.path.exists(MODEL_PATH):
 @st.cache_resource
 def load_model():
     try:
-        # Try to load with token authentication (updated parameter name)
-        model = SwinForImageClassification.from_pretrained(
-            "microsoft/swin-tiny-patch4-window7-224",
-            num_labels=2,
-            ignore_mismatched_sizes=True,
-            token=HUGGINGFACE_TOKEN  # Updated parameter name from use_auth_token to token
-        )
+        # Method 1: Try with token first
+        try:
+            model = SwinForImageClassification.from_pretrained(
+                "microsoft/swin-tiny-patch4-window7-224",
+                num_labels=2,
+                ignore_mismatched_sizes=True,
+                token=HUGGINGFACE_TOKEN
+            )
+        except Exception as token_error:
+            st.warning(f"Token authentication failed: {str(token_error)}")
+            st.info("🔄 Trying without token (public access)...")
+            
+            # Method 2: Try without token (public access)
+            model = SwinForImageClassification.from_pretrained(
+                "microsoft/swin-tiny-patch4-window7-224",
+                num_labels=2,
+                ignore_mismatched_sizes=True
+            )
+        
+        # Load your fine-tuned weights
         model.load_state_dict(torch.load(
             MODEL_PATH, map_location=torch.device("cpu")))
         model.eval()
         return model
+        
     except Exception as e:
         st.error(f"❌ Error loading model: {str(e)}")
         st.error("🔧 Troubleshooting tips:")
-        st.error("1. Make sure your Hugging Face token is valid")
+        st.error("1. Generate a new Hugging Face token (your current one may be expired)")
         st.error("2. Check your internet connection")
-        st.error("3. The model file might be corrupted - try deleting it and re-downloading")
+        st.error("3. Try clearing Streamlit cache with Ctrl+Shift+R")
+        st.error("4. The model file might be corrupted - try deleting it and re-downloading")
         return None
 
 # Load the model
