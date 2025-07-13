@@ -7,6 +7,11 @@ import os
 import gdown
 import time
 
+# Set Hugging Face token - ADD THIS AT THE TOP
+# You can get your token from https://huggingface.co/settings/tokens
+HUGGINGFACE_TOKEN = "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"  # Replace with your actual token
+os.environ['HUGGINGFACE_HUB_TOKEN'] = HUGGINGFACE_TOKEN
+
 # Page configuration
 st.set_page_config(
     page_title="Oral Cancer Detection System",
@@ -210,14 +215,16 @@ if not os.path.exists(MODEL_PATH):
         except Exception as e:
             st.error(f"❌ Error downloading model: {str(e)}")
 
-# Load model
+# Load model with better error handling
 @st.cache_resource
 def load_model():
     try:
+        # Try to load with token authentication
         model = SwinForImageClassification.from_pretrained(
             "microsoft/swin-tiny-patch4-window7-224",
             num_labels=2,
-            ignore_mismatched_sizes=True
+            ignore_mismatched_sizes=True,
+            use_auth_token=True  # This will use the token from environment
         )
         model.load_state_dict(torch.load(
             MODEL_PATH, map_location=torch.device("cpu")))
@@ -225,6 +232,10 @@ def load_model():
         return model
     except Exception as e:
         st.error(f"❌ Error loading model: {str(e)}")
+        st.error("🔧 Troubleshooting tips:")
+        st.error("1. Make sure your Hugging Face token is valid")
+        st.error("2. Check your internet connection")
+        st.error("3. The model file might be corrupted - try deleting it and re-downloading")
         return None
 
 # Load the model
@@ -232,7 +243,18 @@ with st.spinner("🔄 Loading AI model..."):
     model = load_model()
 
 if model is None:
-    st.error("❌ Failed to load the model. Please check your internet connection and try again.")
+    st.error("❌ Failed to load the model. Please check your Hugging Face token and try again.")
+    st.markdown("""
+    <div class="error-box">
+        <h4>🔧 How to fix this:</h4>
+        <ol>
+            <li>Go to <a href="https://huggingface.co/settings/tokens" target="_blank">Hugging Face Tokens</a></li>
+            <li>Create a new token (Read access is sufficient)</li>
+            <li>Replace <code>your_token_here</code> in the code with your actual token</li>
+            <li>Restart the application</li>
+        </ol>
+    </div>
+    """, unsafe_allow_html=True)
     st.stop()
 
 class_names = ["CANCER", "NON CANCER"]
