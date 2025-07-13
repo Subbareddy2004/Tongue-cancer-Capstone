@@ -9,7 +9,7 @@ import time
 
 # Set Hugging Face token - ADD THIS AT THE TOP
 # You can get your token from https://huggingface.co/settings/tokens
-HUGGINGFACE_TOKEN = "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"  # Replace with your actual token
+HUGGINGFACE_TOKEN = "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"  # Replace with your actual token
 os.environ['HUGGINGFACE_HUB_TOKEN'] = HUGGINGFACE_TOKEN
 
 # Page configuration
@@ -219,12 +219,12 @@ if not os.path.exists(MODEL_PATH):
 @st.cache_resource
 def load_model():
     try:
-        # Try to load with token authentication
+        # Try to load with token authentication (updated parameter name)
         model = SwinForImageClassification.from_pretrained(
             "microsoft/swin-tiny-patch4-window7-224",
             num_labels=2,
             ignore_mismatched_sizes=True,
-            use_auth_token=True  # This will use the token from environment
+            token=HUGGINGFACE_TOKEN  # Updated parameter name from use_auth_token to token
         )
         model.load_state_dict(torch.load(
             MODEL_PATH, map_location=torch.device("cpu")))
