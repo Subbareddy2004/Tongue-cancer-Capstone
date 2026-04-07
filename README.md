@@ -137,3 +137,19 @@ uvicorn app:app --reload
 - **Training Data**: Oral cancer medical imagery dataset
 - **Input Size**: Standard medical image dimensions
 - **Output Classes**: Binary classification (Cancer/No Cancer)
+
+## 🔗 Resources & Links
+
+### Dataset
+
+- **Kaggle Dataset**: [Oral Cancer Dataset 2.0](https://www.kaggle.com/datasets/zaidpy/oral-cancer-dataset?select=Oral+cancer+Dataset+2.0)
+
+### Deployment & Demo
+
+- **Live Demo (Streamlit)**: [Capstone Project App](https://capstoneprojectapp.streamlit.app/)
+- **Hugging Face Space**: [Oral Cancer Detection](https://huggingface.co/spaces/Subbareddy1/oral-cancer-detection)
+
+### Training & Model
+
+- **Training Code (Google Colab)**: [Notebook Link](https://colab.research.google.com/drive/1onAzH5oT1NUX6G_dnrOrQ2KUNYueGHLd?usp=sharing)
+- **Trained Model**: [Download Model Weights](https://drive.usercontent.google.com/download?id=1CIDpp_rZYc1us5H6iXE9r4WDOQBLXm9f&authuser=0)
